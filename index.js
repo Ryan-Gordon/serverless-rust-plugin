@@ -12,8 +12,6 @@ const { mkdirSync, writeFileSync, readFileSync } = require("fs");
 
 const DEFAULT_DOCKER_TAG = "latest";
 const DEFAULT_DOCKER_IMAGE = "softprops/lambda-rust";
-const RUST_RUNTIME = "rust";
-const BASE_RUNTIME = "provided.al2";
 const NO_OUTPUT_CAPTURE = { stdio: ["ignore", process.stdout, process.stderr] };
 const MUSL_PLATFORMS = ["darwin", "win32", "linux"];
 
@@ -76,13 +74,14 @@ class RustPlugin {
       ""
     ).split(/\s+/);
 
-    let target = (funcArgs || {}).target || this.custom.target;
+    let target = (funcArgs || {}).target || this.custom.target
 
-    const targetArgs = target
-      ? ["--target", target]
-      : MUSL_PLATFORMS.includes(platform)
-        ? ["--target", "x86_64-unknown-linux-musl"]
-        : [];
+    const targetArgs =
+      target ?
+        ['--target', target]
+        : MUSL_PLATFORMS.includes(platform)
+          ? ["--target", "x86_64-unknown-linux-musl"]
+          : [];
     return [
       ...defaultArgs,
       ...profileArgs,
@@ -291,10 +290,8 @@ class RustPlugin {
     let rustFunctionsFound = false;
     this.functions().forEach((funcName) => {
       const func = service.getFunction(funcName);
-      const runtime = func.runtime || service.provider.runtime;
-
-      func.tags = func.tags || {};
-      if (!(runtime === RUST_RUNTIME || func.tags.language === "rust")) {
+      const isRustFunction = !!func.tags?.rust
+      if (!isRustFunction) {
         // skip functions which don't apply to rust
         return;
       }
@@ -349,8 +346,8 @@ class RustPlugin {
     if (!rustFunctionsFound && strictMode) {
       throw new Error(
         `Error: no Rust functions found. ` +
-          `Use 'runtime: ${RUST_RUNTIME}' in global or ` +
-          `function configuration to use this plugin.`,
+          `Use 'tags.rust: true' in ` +
+          `function configuration to use this plugin.`
       );
     }
   }
