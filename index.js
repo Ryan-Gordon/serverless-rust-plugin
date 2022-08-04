@@ -48,6 +48,7 @@ class RustPlugin {
         dockerImage: DEFAULT_DOCKER_IMAGE,
         dockerless: false,
         strictMode: true,
+        inWorkspace: false,
       },
       (this.serverless.service.custom && this.serverless.service.custom.rust) ||
         {},
@@ -168,7 +169,7 @@ class RustPlugin {
     const zip = new AdmZip();
     zip.addFile(
       "bootstrap",
-      readFileSync(path.join(sourceDir, binary)),
+      readFileSync(path.join(this.custom.inWorkspace ? '..' : '', sourceDir, binary)),
       "",
       0o755,
     );
