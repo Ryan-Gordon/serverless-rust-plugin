@@ -50,7 +50,7 @@ class RustPlugin {
         strictMode: true,
       },
       (this.serverless.service.custom && this.serverless.service.custom.rust) ||
-        {}
+        {},
     );
 
     // Docker can't access resources outside of the current build directory.
@@ -80,8 +80,8 @@ class RustPlugin {
     const targetArgs = target
       ? ["--target", target]
       : MUSL_PLATFORMS.includes(platform)
-      ? ["--target", "x86_64-unknown-linux-musl"]
-      : [];
+        ? ["--target", "x86_64-unknown-linux-musl"]
+        : [];
     return [
       ...defaultArgs,
       ...profileArgs,
@@ -103,19 +103,19 @@ class RustPlugin {
           [`CC_${target || "x86_64_unknown_linux_musl"}`]: linker,
         }
       : "win32" === platform
-      ? {
-          RUSTFLAGS: (env["RUSTFLAGS"] || "") + " -Clinker=rust-lld",
-          TARGET_CC: "rust-lld",
-          CC_x86_64_unknown_linux_musl: "rust-lld",
-        }
-      : "darwin" === platform
-      ? {
-          RUSTFLAGS:
-            (env["RUSTFLAGS"] || "") + " -Clinker=x86_64-linux-musl-gcc",
-          TARGET_CC: "x86_64-linux-musl-gcc",
-          CC_x86_64_unknown_linux_musl: "x86_64-linux-musl-gcc",
-        }
-      : {};
+        ? {
+            RUSTFLAGS: (env["RUSTFLAGS"] || "") + " -Clinker=rust-lld",
+            TARGET_CC: "rust-lld",
+            CC_x86_64_unknown_linux_musl: "rust-lld",
+          }
+        : "darwin" === platform
+          ? {
+              RUSTFLAGS:
+                (env["RUSTFLAGS"] || "") + " -Clinker=x86_64-linux-musl-gcc",
+              TARGET_CC: "x86_64-linux-musl-gcc",
+              CC_x86_64_unknown_linux_musl: "x86_64-linux-musl-gcc",
+            }
+          : {};
     return {
       ...defaultEnv,
       ...platformEnv,
@@ -128,7 +128,7 @@ class RustPlugin {
       let target = (funcArgs || {}).target || this.custom.target;
       executable = path.join(
         executable,
-        target ? target : "x86_64-unknown-linux-musl"
+        target ? target : "x86_64-unknown-linux-musl",
       );
     }
     return path.join(executable, profile !== "dev" ? "release" : "debug");
@@ -138,7 +138,7 @@ class RustPlugin {
     return path.join(
       "target",
       "lambda",
-      profile !== "dev" ? "release" : "debug"
+      profile !== "dev" ? "release" : "debug",
     );
   }
 
@@ -148,7 +148,7 @@ class RustPlugin {
       cargoPackage,
       binary,
       profile,
-      platform()
+      platform(),
     );
 
     const env = this.localBuildEnv(funcArgs, process.env, platform());
@@ -170,7 +170,7 @@ class RustPlugin {
       "bootstrap",
       readFileSync(path.join(sourceDir, binary)),
       "",
-      0o755
+      0o755,
     );
     const targetDir = this.localArtifactDir(profile);
     try {
@@ -196,7 +196,7 @@ class RustPlugin {
     srcPath,
     cargoRegistry,
     cargoDownloads,
-    env
+    env,
   ) {
     const defaultArgs = [
       "run",
@@ -252,7 +252,7 @@ class RustPlugin {
       this.srcPath,
       cargoRegistry,
       cargoDownloads,
-      process.env
+      process.env,
     );
 
     this.serverless.cli.log("Running containerized build");
@@ -302,7 +302,7 @@ class RustPlugin {
       func.package = func.package || {};
       if (func.package.artifact && func.package.artifact !== "") {
         this.serverless.cli.log(
-          `Artifact defined for ${func.handler}, skipping build...`
+          `Artifact defined for ${func.handler}, skipping build...`,
         );
       } else {
         const { cargoPackage, binary } = this.cargoBinary(func);
@@ -315,7 +315,7 @@ class RustPlugin {
           : this.dockerBuild(func.rust, cargoPackage, binary, profile);
         if (res.error || res.status > 0) {
           this.serverless.cli.log(
-            `Rust build encountered an error: ${res.error} ${res.status}.`
+            `Rust build encountered an error: ${res.error} ${res.status}.`,
           );
           throw new Error(res.error);
         }
@@ -331,7 +331,7 @@ class RustPlugin {
         const artifactPath = path.join(
           this.srcPath,
           `target/lambda/${"dev" === profile ? "debug" : "release"}`,
-          `${binary}.zip`
+          `${binary}.zip`,
         );
         func.package = func.package || {};
         func.package.artifact = artifactPath;
@@ -349,7 +349,7 @@ class RustPlugin {
       throw new Error(
         `Error: no Rust functions found. ` +
           `Use 'runtime: ${RUST_RUNTIME}' in global or ` +
-          `function configuration to use this plugin.`
+          `function configuration to use this plugin.`,
       );
     }
   }

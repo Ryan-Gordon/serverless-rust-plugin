@@ -20,7 +20,7 @@ describe("RustPlugin", () => {
       },
       config: {},
     },
-    {}
+    {},
   );
 
   it("registers expected lifecycle hooks", () => {
@@ -34,7 +34,7 @@ describe("RustPlugin", () => {
   it("sets sensible defaults", () => {
     const unconfigured = new RustPlugin(
       { version: "1.71.3", service: { package: {} }, config: {} },
-      {}
+      {},
     );
     assert.deepEqual(unconfigured.custom, {
       cargoFlags: "",
@@ -63,7 +63,7 @@ describe("RustPlugin", () => {
         },
         config: {},
       },
-      {}
+      {},
     );
     assert.deepEqual(configured.custom, {
       cargoFlags: "--features foo",
@@ -99,7 +99,7 @@ describe("RustPlugin", () => {
         "--features",
         "foo",
       ],
-      "failed on linux"
+      "failed on linux",
     );
     assert.deepEqual(
       plugin.localBuildArgs({}, "foo", "bar", "release", "darwin"),
@@ -113,7 +113,7 @@ describe("RustPlugin", () => {
         "--features",
         "foo",
       ],
-      "failed on osx"
+      "failed on osx",
     );
     assert.deepEqual(
       plugin.localBuildArgs({}, "foo", "bar", "release", "win32"),
@@ -127,7 +127,7 @@ describe("RustPlugin", () => {
         "--features",
         "foo",
       ],
-      "failed on windows"
+      "failed on windows",
     );
   });
 
@@ -135,7 +135,7 @@ describe("RustPlugin", () => {
     assert.deepEqual(
       plugin.localBuildEnv({}, {}, "linux"),
       {},
-      "failed on linux"
+      "failed on linux",
     );
     assert.deepEqual(
       plugin.localBuildEnv({}, {}, "darwin"),
@@ -145,7 +145,7 @@ describe("RustPlugin", () => {
         RUSTFLAGS: " -Clinker=x86_64-linux-musl-gcc",
         TARGET_CC: "x86_64-linux-musl-gcc",
       },
-      "failed on osx"
+      "failed on osx",
     );
     assert.deepEqual(
       plugin.localBuildEnv({}, {}, "win32"),
@@ -154,7 +154,7 @@ describe("RustPlugin", () => {
         RUSTFLAGS: " -Clinker=rust-lld",
         TARGET_CC: "rust-lld",
       },
-      "failed on windows"
+      "failed on windows",
     );
   });
 
@@ -162,32 +162,32 @@ describe("RustPlugin", () => {
     assert.equal(
       plugin.localSourceDir({}, "dev", "linux"),
       path.join("target", "x86_64-unknown-linux-musl", "debug"),
-      "failed on linux"
+      "failed on linux",
     );
     assert.equal(
       plugin.localSourceDir({}, "release", "linux"),
       path.join("target", "x86_64-unknown-linux-musl", "release"),
-      "failed on linux"
+      "failed on linux",
     );
     assert.equal(
       plugin.localSourceDir({}, "dev", "darwin"),
       path.join("target", "x86_64-unknown-linux-musl", "debug"),
-      "failed on osx"
+      "failed on osx",
     );
     assert.equal(
       plugin.localSourceDir({}, "release", "darwin"),
       path.join("target", "x86_64-unknown-linux-musl", "release"),
-      "failed on osx"
+      "failed on osx",
     );
     assert.equal(
       plugin.localSourceDir({}, "dev", "win32"),
       path.join("target", "x86_64-unknown-linux-musl", "debug"),
-      "failed on windows"
+      "failed on windows",
     );
     assert.equal(
       plugin.localSourceDir({}, "release", "win32"),
       path.join("target", "x86_64-unknown-linux-musl", "release"),
-      "failed on windows"
+      "failed on windows",
     );
   });
 
@@ -195,12 +195,12 @@ describe("RustPlugin", () => {
     assert.equal(
       plugin.localArtifactDir("dev"),
       path.join("target", "lambda", "debug"),
-      "failed on linux"
+      "failed on linux",
     );
     assert.equal(
       plugin.localArtifactDir("release"),
       path.join("target", "lambda", "release"),
-      "failed on linux"
+      "failed on linux",
     );
   });
 
@@ -221,7 +221,7 @@ describe("RustPlugin", () => {
         },
         config: {},
       },
-      {}
+      {},
     );
     assert(dockerless.buildLocally({}));
 
@@ -238,7 +238,7 @@ describe("RustPlugin", () => {
         "source_path",
         "cargo_registry",
         "cargo_downloads",
-        {}
+        {},
       ),
       [
         "run",
@@ -257,7 +257,7 @@ describe("RustPlugin", () => {
         "-e",
         "CARGO_FLAGS=--features foo -p foo",
         "notsoftprops/lambda-rust:latest",
-      ]
+      ],
     );
   });
 });
