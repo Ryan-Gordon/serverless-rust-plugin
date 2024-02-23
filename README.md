@@ -62,6 +62,9 @@ functions:
 
 The default behavior is to build your lambda inside a docker container. Make sure you have a docker daemon running if you are not opting into the dockerless mode.
 
+## Use with cargo workspaces 
+Workspaces and per workspace serverless files are now supported. To use it, a custom flag has been added to signal that the serverless.yml is nested in a cargo workspace. Since the binaries will be outputted to a target folder in the workspace root, the zip-copy-process needs to take that into account.
+
 ## 🖍️ customize
 
 You can optionally adjust the default settings of the dockerized build env using
@@ -78,6 +81,8 @@ custom:
     dockerTag: 'some-custom-tag'
     #  custom docker image
     dockerImage: 'dockerUser/dockerRepo'
+    # Using a workspace? 
+    inWorkspace: true # <---- Defaults to false
 ```
 
 ### 🥼 (experimental) local builds
