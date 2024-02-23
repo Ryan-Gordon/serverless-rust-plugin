@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "serverless": "3.38.0",
-    "serverless-rust": "file:../../.."
+    "serverless-rust": "../../..",
+    "adm-zip": "^0.5.9"
   }
 }

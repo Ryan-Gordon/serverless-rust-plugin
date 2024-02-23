@@ -20,7 +20,9 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm test
+        run: |
+          npm i
+          npm test
   local-builds:
     strategy:
       matrix:
@@ -43,6 +45,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
+          npm i
           cd tests/integration/test-func
           npm i -D ../../.. --silent
           npx serverless package
