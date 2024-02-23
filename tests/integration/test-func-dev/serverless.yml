@@ -18,3 +18,5 @@ custom:
 functions:
   hello:
     handler: test-func
+    tags:
+      rust: true

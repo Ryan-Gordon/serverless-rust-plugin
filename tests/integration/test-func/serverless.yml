@@ -15,4 +15,7 @@ functions:
   hello:
     rust:
       dockerless: true
+    tags:
+      rust: true
     handler: test-func
+    
