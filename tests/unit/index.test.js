@@ -42,6 +42,7 @@ describe("RustPlugin", () => {
       dockerTag: "latest",
       dockerless: false,
       strictMode: true,
+      inWorkspace: false
     });
   });
 
@@ -57,6 +58,7 @@ describe("RustPlugin", () => {
               dockerTag: "custom-tag",
               dockerless: true,
               strictMode: false,
+              inWorkspace: false
             },
           },
           package: {},
@@ -71,6 +73,7 @@ describe("RustPlugin", () => {
       dockerTag: "custom-tag",
       dockerless: true,
       strictMode: false,
+      inWorkspace: false
     });
   });
 
