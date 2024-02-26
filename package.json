@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "npx prettier --check '**.js' '!coverage' ",
     "test": "npx jest --collectCoverage",
-    "test:integration": "./tests/integration/test.sh",
+    "test:integration": "npm i; ./tests/integration/test.sh",
     "fmt": "npx prettier --write '**.js' '!coverage' "
   },
   "repository": {
