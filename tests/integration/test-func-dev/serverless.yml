@@ -2,12 +2,15 @@
 service: aws-rust # NOTE: update this with your service name
 provider:
   name: aws
-  runtime: rust
+  runtime: provided.al2023
   memorySize: 128
 
 package:
-  individually: true
-
+#  individually: true # creates one artifact for each function
+  exclude:
+    - ./**
+  include:
+    - ./target/release/test
 plugins:
   - serverless-rust
 
@@ -18,3 +21,5 @@ custom:
 functions:
   hello:
     handler: test-func
+    tags:
+      rust: true

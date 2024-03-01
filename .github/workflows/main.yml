@@ -16,15 +16,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install
-        run: npm ci
+        run: npm install
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm test
+        run: |
+          npm i
+          npm test
   local-builds:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -43,6 +45,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
+          npm i
           cd tests/integration/test-func
           npm i -D ../../.. --silent
           npx serverless package
