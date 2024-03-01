@@ -38,7 +38,7 @@ for project in test-func test-func-dev; do
         -i --rm \
         -e DOCKER_LAMBDA_USE_STDIN=1 \
         -v /tmp/lambda:/var/task \
-        lambci/lambda:provided \
+        localstack/lambda:python3.9-1.3.0-20221202 \
         < test-event.json \
         | grep -v RequestId \
         | grep -v '^\W*$' \
