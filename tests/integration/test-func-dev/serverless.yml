@@ -1,8 +1,8 @@
 
-service: aws-rust # NOTE: update this with your service name
+service: test-func-dev # NOTE: update this with your service name
 provider:
   name: aws
-  runtime: provided.al2023
+  runtime: provided
   memorySize: 128
 
 package:

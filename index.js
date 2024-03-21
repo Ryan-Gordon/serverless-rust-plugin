@@ -21,7 +21,9 @@ function includeInvokeHook(serverlessVersion) {
   let [major, minor] = serverlessVersion.split(".");
   let majorVersion = parseInt(major);
   let minorVersion = parseInt(minor);
-  return majorVersion === 1 && minorVersion >= 38 && minorVersion < 40;
+  let shouldIncludeInvoke = majorVersion === 1 && minorVersion >= 38 && minorVersion < 40;
+  console.log(shouldIncludeInvoke);
+  return true
 }
 
 /** assumes docker is on the host's execution path for containerized builds
@@ -49,6 +51,8 @@ class RustPlugin {
         dockerless: false,
         strictMode: true,
         inWorkspace: false,
+        target: "x86_64-unknown-linux-musl",
+        linker: platform() === "win32" ? "rust-lld" : null,
       },
       (this.serverless.service.custom && this.serverless.service.custom.rust) ||
         {}
@@ -143,6 +147,7 @@ class RustPlugin {
   }
 
   localBuild(funcArgs, cargoPackage, binary, profile) {
+    console.log("Local build");
     const args = this.localBuildArgs(
       funcArgs,
       cargoPackage,
@@ -163,8 +168,10 @@ class RustPlugin {
     if (buildResult.error || buildResult.status > 0) {
       return buildResult;
     }
+    console.log(buildResult);
     // now rename binary and zip
     const sourceDir = this.localSourceDir(funcArgs, profile, platform());
+    console.log(sourceDir);
     const zip = new AdmZip();
     zip.addFile(
       "bootstrap",
@@ -175,10 +182,12 @@ class RustPlugin {
       "755"
     );
     const targetDir = this.localArtifactDir(profile);
+    console.log(targetDir);
     try {
       mkdirSync(targetDir, { recursive: true });
     } catch {}
     try {
+      console.log(targetDir, binary)
       writeFileSync(path.join(targetDir, `${binary}.zip`), zip.toBuffer());
       return {};
     } catch (err) {
@@ -188,6 +197,7 @@ class RustPlugin {
         status: 1,
       };
     }
+
   }
 
   dockerBuildArgs(
@@ -256,6 +266,7 @@ class RustPlugin {
       cargoDownloads,
       process.env
     );
+    console.log(args)
 
     this.serverless.cli.log("Running containerized build");
 
@@ -279,7 +290,7 @@ class RustPlugin {
   }
 
   buildLocally(func) {
-    return (func.rust || {}).dockerless || this.custom.dockerless;
+    return true;
   }
 
   /** the entry point for building functions */
@@ -319,6 +330,7 @@ class RustPlugin {
           );
           throw new Error(res.error);
         }
+        console.log("Got here");
         // If all went well, we should now have find a packaged compiled binary under `target/lambda/release`.
         //
         // The AWS "provided" lambda runtime requires executables to be named
@@ -333,6 +345,7 @@ class RustPlugin {
           `target/lambda/${"dev" === profile ? "debug" : "release"}`,
           `${binary}.zip`
         );
+        console.log(artifactPath);
         func.package = func.package || {};
         func.package.artifact = artifactPath;
 

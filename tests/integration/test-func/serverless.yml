@@ -1,12 +1,12 @@
 
-service: aws-rust # NOTE: update this with your service name
+service: test-func # NOTE: update this with your service name
 provider:
   name: aws
-  runtime: provided.al2023
+  runtime: provided
   memorySize: 128
 
 package:
-#  individually: true # creates one artifact for each function
+  individually: true # creates one artifact for each function
   exclude:
     - ./**
   include:

@@ -37,8 +37,8 @@ for project in test-func test-func-dev; do
     ${SLS_DOCKER_CLI:-docker} run \
         -i --rm \
         -e DOCKER_LAMBDA_USE_STDIN=1 \
-        -v /tmp/lambda:/var/task \
-        localstack/lambda:python3.9-1.3.0-20221202 \
+        -v ${PWD}/target/lambda/release/output/test-func:/var/task:ro,delegated \
+        lambci/lambda:provided.al2 \
         < test-event.json \
         | grep -v RequestId \
         | grep -v '^\W*$' \
@@ -48,7 +48,7 @@ for project in test-func test-func-dev; do
     assert_success "when invoked, it produces expected output" 
     # integration test local invocation
     assert_success "it supports serverless local invocation" \
-        $(npx serverless invoke local -f hello -d '{"baz":"boom"}' \
+        $(npx serverless invoke local -f hello --path ./test-event.json \
         | grep -v Serverless \
         | grep -v RequestId \
         | grep -v '^\W*$' \
