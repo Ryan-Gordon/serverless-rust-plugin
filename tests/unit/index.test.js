@@ -29,6 +29,7 @@ describe("RustPlugin", () => {
       "before:deploy:function:packageFunction",
       "before:offline:start",
       "before:offline:start:init",
+      "before:invoke:local:invoke",
     ]);
   });
   it("sets sensible defaults", () => {
@@ -43,6 +44,8 @@ describe("RustPlugin", () => {
       dockerless: false,
       strictMode: true,
       inWorkspace: false,
+      linker: null,
+      target: "x86_64-unknown-linux-musl",
     });
   });
 
@@ -59,6 +62,8 @@ describe("RustPlugin", () => {
               dockerless: true,
               strictMode: false,
               inWorkspace: false,
+              linker: null,
+              target: "x86_64-unknown-linux-musl",
             },
           },
           package: {},
@@ -74,6 +79,8 @@ describe("RustPlugin", () => {
       dockerless: true,
       strictMode: false,
       inWorkspace: false,
+      linker: null,
+      target: "x86_64-unknown-linux-musl",
     });
   });
 
