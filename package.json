@@ -1,6 +1,6 @@
 {
   "name": "serverless-rust",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "description": "Serverless framework plugin for Rustlang applications",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/softprops/serverless-rust.git"
+    "url": "git+https://github.com/Ryan-Gordon/serverless-rust-plugin.git"
   },
   "keywords": [
     "rustlang",
@@ -19,12 +19,12 @@
     "serverless",
     "lambda"
   ],
-  "author": "softprops",
+  "author": "Ryan-Gordon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/softprops/serverless-rust/issues"
+    "url": "https://github.com/Ryan-Gordon/serverless-rust-plugin/issues"
   },
-  "homepage": "https://github.com/softprops/serverless-rust#readme",
+  "homepage": "https://github.com/Ryan-Gordon/serverless-rust-plugin#readme",
   "dependencies": {
     "fs-copy-file-sync": "^1.1.1",
     "fs-extra": "^9.0.0",

@@ -1,6 +1,10 @@
 # ⚡ 0.4.0 (unreleased)
 
-* use `latest` docker tag by default. This reduces some of the maintenance in publishing this plugin. Users are still able to pin versions as they always have.
+* use `latest` docker tag by default. 
+* Use better maintained lambda-rust dep
+* Clean up code
+* Get build back to green
+* Test local dev
 
 # ⚡ 0.3.8
 
