@@ -21,9 +21,10 @@ function includeInvokeHook(serverlessVersion) {
   let [major, minor] = serverlessVersion.split(".");
   let majorVersion = parseInt(major);
   let minorVersion = parseInt(minor);
-  let shouldIncludeInvoke = majorVersion === 1 && minorVersion >= 38 && minorVersion < 40;
+  let shouldIncludeInvoke =
+    majorVersion === 1 && minorVersion >= 38 && minorVersion < 40;
   console.log(shouldIncludeInvoke);
-  return true
+  return true;
 }
 
 /** assumes docker is on the host's execution path for containerized builds
@@ -187,7 +188,7 @@ class RustPlugin {
       mkdirSync(targetDir, { recursive: true });
     } catch {}
     try {
-      console.log(targetDir, binary)
+      console.log(targetDir, binary);
       writeFileSync(path.join(targetDir, `${binary}.zip`), zip.toBuffer());
       return {};
     } catch (err) {
@@ -197,7 +198,6 @@ class RustPlugin {
         status: 1,
       };
     }
-
   }
 
   dockerBuildArgs(
@@ -266,7 +266,7 @@ class RustPlugin {
       cargoDownloads,
       process.env
     );
-    console.log(args)
+    console.log(args);
 
     this.serverless.cli.log("Running containerized build");
 
